@@ -4,7 +4,6 @@ namespace App\Helpers\Media;
 
 use App\Models\Media;
 use Intervention\Image\Facades\Image;
-
 class MediaUpload
 {
     public static function uploadMedia($media_file)
@@ -13,11 +12,11 @@ class MediaUpload
         $media_ext = strtolower($media_file->getClientOriginalExtension());
         $name_gen = hexdec(uniqid());
 
-        if (in_array($media_ext, Media::AUDIO_EXTENSION)) {
+        if (in_array($media_ext, Media::AUDIO)) {
             $up_location = 'media/audio/';
-        } elseif (in_array($media_ext, Media::DOCUMENT_EXTENSION)) {
+        } elseif (in_array($media_ext, Media::DOCUMENT)) {
             $up_location = 'media/documents/';
-        } elseif (in_array($media_ext, Media::IMAGE_EXTENSION)) {
+        } elseif (in_array($media_ext, Media::IMAGE)) {
             $up_location = 'media/images/';
         }
 
@@ -27,7 +26,7 @@ class MediaUpload
         $media_file->move($up_location, $media_slug);
         $alt = substr($media_file->getClientOriginalName(), 0, strpos($media_file->getClientOriginalName(), "."));
 
-        if (in_array($media_ext, Media::IMAGE_EXTENSION)) {
+        if (in_array($media_ext, Media::IMAGE)) {
             $thumbnail = Image::make($last_media);
             $medium = Image::make($last_media);
 
@@ -61,4 +60,10 @@ class MediaUpload
         }
 
     }
+
+
+
+
+
+
 }

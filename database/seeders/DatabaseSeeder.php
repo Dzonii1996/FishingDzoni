@@ -15,14 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
         $this->call([
-            Post::class
-
-        ]);
-    }}
+            StatusSeeder::class,
+            UserSeeder::class,
+            PostSeeder::class,
 //
-//        Post::factory(5)->create([
-//        ]);
-//    }
-
-
+        ]);
+    }
+}

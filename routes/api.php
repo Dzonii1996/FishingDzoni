@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
@@ -26,10 +27,17 @@ Route::group([
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
 });
+Route::post('posts', [PostController::class, 'index']);
+Route::post('post/{id}', [PostController::class, 'show']);
+Route::post('posts', [PostController::class, 'store']);
+Route::post('posts/{id}', [AuthController::class, 'update']);
+Route::get('posts/{id}', [PostController::class, 'delete']);
 
-Route::get('articles', 'ArticleController@index');
-Route::get('articles/{id}', 'ArticleController@show');
-Route::post('articles', 'ArticleController@store');
-Route::put('articles/{id}', 'ArticleController@update');
-Route::delete('articles/{id}', 'ArticleController@delete');
+
+
+Route::resource('media', MediaController::class);
+
+
+
+
 
