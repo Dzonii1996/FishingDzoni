@@ -8,27 +8,38 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        return Post::all();
-    }
+        $search = $request->search;
+
+        $posts = Post::with(['author',
+            'featured_image']);
+
+        $posts = Post::query()
+            ->where('title', 'LIKE', "%{$search}%")
+            ->orWhere('content', 'LIKE', "%{$search}%")
+            ->get();
+
+        return response()->json($posts);
+
+            }
 
 
-    public function create()
-    {
-        //
-    }
+
+
 
 
     public function store(Request $request)
     {
         return Post::create($request->all());
+        return response()->json($post, 201);
     }
 
 
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        return $post;
+
     }
 
 
@@ -38,17 +49,16 @@ class PostController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        $post = Post::findOrFail($id);
         $post->update($request->all());
+        return response()->json($post, 200);
     }
 
 
-    public function destroy(Request  $request, $id)
+    public function delete(Post $post)
     {
-        $post=Post::findOrFail($id);
         $post->delate();
-        return 204;
+        return response()->json($post, 204);
     }
 }

@@ -16,8 +16,6 @@ class Fishes extends Model
 
     ];
 
-    public function place () {
-        return $this ->hasMany(Places::class);
-    }
+
 
 }
